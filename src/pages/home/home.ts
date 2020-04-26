@@ -45,4 +45,8 @@ export class HomePage {
         this.navCtrl.setRoot('CategoriesPage');
       }, error => {});
   }
+
+  public signup(){
+    this.navCtrl.push('SignupPage')
+  }
 }
