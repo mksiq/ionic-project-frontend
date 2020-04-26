@@ -9,6 +9,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { CategoryService } from '../services/domain/category.service';
 import { ErrorInterceptorProvider } from '../interceptors/errror-interceptor';
+import { AuthInterceptorProvider } from '../interceptors/auth-interceptor';
 import { AuthService } from '../services/auth.service';
 import { StorageService } from '../services/storage.service';
 import { CustomerService } from '../services/domain/customer.service';
@@ -32,6 +33,7 @@ import { CustomerService } from '../services/domain/customer.service';
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     CategoryService,
     AuthService,
+    AuthInterceptorProvider,
     ErrorInterceptorProvider,
     StorageService,
     CustomerService
