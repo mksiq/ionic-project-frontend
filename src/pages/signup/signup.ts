@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CityService } from '../../services/domain/city.service';
 import { ProvinceService } from '../../services/domain/province.service';
+import { CustomerService } from '../../services/domain/customer.service';
 import { ProvinceDTO } from '../../models/province.dto';
 import { CityDTO } from '../../models/city.dto';
 
@@ -21,10 +22,12 @@ export class SignupPage {
      public navParams: NavParams,
      public formBuilder: FormBuilder,
      public cityService: CityService,
-     public provinceService: ProvinceService ) {
+     public provinceService: ProvinceService,
+     public customerService: CustomerService,
+     public alertCtrl: AlertController ) {
 
       this.formGroup = this.formBuilder.group({
-        name: ['Jon Doe', [Validators.required, Validators.minLength(50), Validators.maxLength(120)]],
+        name: ['Jon Doe', [Validators.required, Validators.minLength(5), Validators.maxLength(120)]],
         email: ['jondoe@gmail.com', [Validators.required, Validators.email]],
         type: ['1', [Validators.required]],
         sinOrBn: ['0123456789', [Validators.required]],
@@ -42,7 +45,28 @@ export class SignupPage {
   }
 
   signupUser(){
-    console.log("Form sent");
+    this.customerService.insert(this.formGroup.value).subscribe(response => {
+        this.showInsertOk();
+      }, error => {}
+    );
+  }
+  showInsertOk() {
+    let alert = this.alertCtrl.create({
+      title: 'Success!',
+      message: 'Sign up completed',
+      enableBackdropDismiss: false,
+      buttons: [
+        {
+          text: 'Ok',
+          handler: () => {
+            this.navCtrl.pop();
+          }
+        }
+      ]
+    });
+    
+    alert.present();
+
   }
 
   ionViewDidLoad(){
@@ -62,4 +86,5 @@ export class SignupPage {
       }, error => {}
     );
   }
+  
 }

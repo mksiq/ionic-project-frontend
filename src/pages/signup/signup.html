@@ -5,17 +5,19 @@
 </ion-header>
 
 <ion-content padding>
-
+  
   <ion-content padding>
     <form [formGroup]="formGroup" (ngSubmit)="signupUser(); $event.preventDefault()">
       <ion-item>
         <ion-label stacked>Name*</ion-label>
         <ion-input formControlName="name" type="text"></ion-input>
       </ion-item>
+      <p *ngIf="formGroup.controls['name'].dirty && formGroup.controls['name'].errors" margin-left class="invalidValue">Invalid value</p>
       <ion-item>
         <ion-label stacked>Email*</ion-label>
         <ion-input formControlName="email" type="text"></ion-input>
       </ion-item>
+      <p *ngIf="formGroup.controls['email'].dirty && formGroup.controls['email'].errors" margin-left>Invalid value</p>
       <ion-list radio-group formControlName="type">
         <ion-list-header>
           Customer Use
@@ -78,7 +80,7 @@
           <ion-option *ngFor="let city of cities" [value]="city.id" >{{city.name}}</ion-option>
         </ion-select>
       </ion-item>
-      <button ion-button block type="submit">Sign up</button>
+      <button ion-button block type="submit" [disabled]="formGroup.Invalid">Sign up</button>
     </form>
 
 </ion-content>
