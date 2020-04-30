@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Checkout</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-list>
+    <ion-list-header>
+      Select an Address
+    </ion-list-header>
+    <button ion-item *ngFor="let item of items">
+      <h2>{{item.number}}, {{item.streetName}}</h2>
+      <p>{{item.unitNumber}}, Postal {{item.postalCode}}</p>
+      <p>{{item.city.name}}, {{item.city.province.name}}</p>
+    </button>
+  </ion-list>
+
+</ion-content>
