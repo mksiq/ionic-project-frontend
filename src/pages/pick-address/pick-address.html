@@ -12,7 +12,7 @@
     <ion-list-header>
       Select an Address
     </ion-list-header>
-    <button ion-item *ngFor="let item of items">
+    <button ion-item *ngFor="let item of items" (click)="nextPage(item)">
       <h2>{{item.number}}, {{item.streetName}}</h2>
       <p>{{item.unitNumber}}, Postal {{item.postalCode}}</p>
       <p>{{item.city.name}}, {{item.city.province.name}}</p>

@@ -1,0 +1,55 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Order Confirmation</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+  <ion-card>
+    <ion-card-header>Invoice Items</ion-card-header>
+      <ion-list>
+        <ion-item *ngFor="let item of items">
+          <ion-thumbnail item-start>
+            <img [src]="item.product.imageUrl || 'assets/imgs/prod.jpg'">
+          </ion-thumbnail>
+          <h2>{{item.product.name}}</h2>
+          <p>{{item.product.price | currency}}</p>
+          <p>{{item.quantity}}</p>
+          <p item-end>{{item.product.price * item.quantity | currency}}</p>
+        </ion-item>
+        <ion-item>
+          <h2>Total</h2>
+          <h2 item-end>{{total() | currency}}</h2>
+        </ion-item>
+      </ion-list>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>Customer</ion-card-header>
+    <ion-item>
+      <h2>{{client?.name}}</h2>
+      <p>{{client?.email}}</p>
+    </ion-item>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>Shipping Address</ion-card-header>
+    <h2>{{address?.number}}, {{address?.streetName}}</h2>
+    <p>{{address?.unitNumber}}, Postal {{address?.postalCode}}</p>
+    <p>{{address?.city.name}}, {{address?.city.province.name}}</p>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>Payment</ion-card-header>
+    <ion-item *ngIf="invoice.payment['@type']=='paymentCard'">
+      <h3>Card Payment</h3>
+    </ion-item>
+    <ion-item *ngIf="invoice.payment['@type']=='paymentSlipe'">
+      <h3>Slip Payment</h3>
+    </ion-item>
+  </ion-card>
+</ion-content>
