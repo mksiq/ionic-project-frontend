@@ -1,7 +1,6 @@
 import { Injectable } from "@angular/core";
 import { StorageService } from "../storage.service";
 import { Cart } from "../../models/cart";
-import { ThrowStmt } from "@angular/compiler";
 import { ProductDTO } from "../../models/product.dto";
 
 @Injectable()

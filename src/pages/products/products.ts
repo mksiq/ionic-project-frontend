@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 import { ProductDTO } from '../../models/product.dto';
 import { ProductService } from '../../services/domain/product.service';
 import { API_CONFIG } from '../../config/api.config';
@@ -14,16 +14,24 @@ export class ProductsPage {
   items : ProductDTO[];
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-      public productService: ProductService) {
+      public productService: ProductService, public loadingControl: LoadingController) {
   }
 
   ionViewDidLoad() {
-    let categoryId = this.navParams.get('cat_id')
+    this.loadData();
+  }
+
+  loadData(){
+    let categoryId = this.navParams.get('cat_id');
+    let loader = this.presentLoading();
     this.productService.findByCategory(categoryId)
       .subscribe(response => {
         this.items = response['content'];
+        loader.dismiss();
         this.loadImageUrls();
-      }, error => {});
+      }, error => {
+        loader.dismiss();
+      });
   }
 
   loadImageUrls(){
@@ -40,4 +48,18 @@ export class ProductsPage {
     this.navCtrl.push('ProductDetailPage', {prod_id: id});
   }
 
+  presentLoading(){
+    let loader = this.loadingControl.create({
+      content: "Loading ..."
+    });
+    loader.present();
+    return loader;
+  }
+
+  doRefresh(refresher){
+    this.loadData();
+    setTimeout(() => {
+      refresher.complete();
+    }, 2000);
+  }
 }
